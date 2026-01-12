@@ -1,0 +1,1 @@
+/home/tatsuki/Codes/terminal-settings/nvim/init.lua
