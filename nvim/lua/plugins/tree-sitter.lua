@@ -11,6 +11,7 @@ return {
     local install = require("nvim-treesitter.install")
     install.compilers = { "gcc" }
     install.prefer_git = true
+    highright = { enable = true }
 
     local ok, configs = pcall(require, "nvim-treesitter.configs")
     if ok then
