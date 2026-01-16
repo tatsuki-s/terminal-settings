@@ -126,3 +126,4 @@ cd () {
 	fi
 }
 
+alias ven='source venv/bin/activate'
