@@ -11,7 +11,7 @@ vim.keymap.set('n', '<S-h>', ':BufferLineCyclePrev<CR>', { silent = true })
 --インデントを2マスに
 vim.api.nvim_create_autocmd("FileType", {
   group = my_group,
-  pattern = { "lua", "markdown", "ruby", "svelte", "vue", "js" },
+  pattern = { "lua", "markdown", "ruby", "svelte", "vue", "js", "json" },
   callback = function()
     vim.opt_local.expandtab = true   -- タブキーでスペースを入力する
     vim.opt_local.shiftround = true  -- シフトコマンドでのインデント量を tabstop 単位に丸める
