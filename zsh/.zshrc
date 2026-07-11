@@ -141,6 +141,7 @@ cd () {
 }
 
 alias ven='source venv/bin/activate'
+alias code='flatpak run com.vscodium.codium'
 
 
 # >>> conda initialize >>>
