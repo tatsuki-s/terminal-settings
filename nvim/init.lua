@@ -2,6 +2,7 @@ require("config.lazy")
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.cmd("colorscheme tokyonight")
+vim.opt.scrolloff = 5
 
 -- 次のバッファ（右）へ移動
 vim.keymap.set('n', '<S-l>', ':BufferLineCycleNext<CR>', { silent = true })
