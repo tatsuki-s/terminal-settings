@@ -163,3 +163,48 @@ unset __conda_setup
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Pythonスクリプトの配置パス（環境に合わせて書き換えてください）
+SMART_FINDER_SCRIPT="$HOME/Codes/find-ai//main.py"
+
+findai() {
+    if [ -z "$1" ]; then
+        echo "使用方法:"
+        echo "  cdd init             : 今いるディレクトリをプロジェクトとして登録"
+        echo "  cdd \"キーワード\"    : 複数プロジェクトからファイルを探して開く"
+        return 1
+    fi
+
+    # init コマンドのバイパス
+    if [ "$1" = "init" ]; then
+        python3 "$SMART_FINDER_SCRIPT" init
+        return 0
+    fi
+
+    # 検索の実行（JSON文字列が返ってくる）
+    local json_res=$(python3 "$SMART_FINDER_SCRIPT" search "$1")
+    
+    # 簡易的にJSONからパスを抽出 (jqコマンドが無くても動くようにawk/sedで処理)
+    local root_path=$(echo "$json_res" | grep '"root_path"' | sed -E 's/.*"root_path":[[:space:]]*"([^"]+)".*/\1/')
+    local rel_path=$(echo "$json_res" | grep '"relative_path"' | sed -E 's/.*"relative_path":[[:space:]]*"([^"]+)".*/\1/')
+
+    if [ -n "$root_path" ] && [ -n "$rel_path" ]; then
+        # フルパスを構築
+        local full_path="${root_path}/${rel_path}"
+        echo "🎯 Found in project: $root_path"
+        echo "📄 Path: $rel_path"
+        
+        if [ -d "$full_path" ]; then
+            cd "$full_path"
+        elif [ -f "$full_path" ]; then
+            vi "$full_path"  # または vi "$full_path"
+        else
+            echo "❌ ファイルが見つかりません: $full_path"
+        fi
+    else
+        echo "❌ 該当するプロジェクト・ファイルが見つかりませんでした。"
+    fi
+}
+
+# Created by `pipx` on 2026-07-12 00:47:40
+export PATH="$PATH:/home/tatsuki/.local/bin"
