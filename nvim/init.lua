@@ -4,6 +4,10 @@ vim.opt.relativenumber = true
 vim.cmd("colorscheme tokyonight")
 vim.opt.scrolloff = 5
 
+-- Example keymaps
+vim.keymap.set("n", "<leader>gy", "<cmd>GeminiDiffAccept<cr>", { desc = "Gemini Accept Diff" })
+vim.keymap.set("n", "<leader>gn", "<cmd>GeminiDiffDeny<cr>",   { desc = "Gemini Reject Diff" })
+
 -- 次のバッファ（右）へ移動
 vim.keymap.set('n', '<S-l>', ':BufferLineCycleNext<CR>', { silent = true })
 -- 前のバッファ（左）へ移動
